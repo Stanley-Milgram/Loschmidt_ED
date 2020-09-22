@@ -1,0 +1,9 @@
+L               = 8 
+D               = 2.0
+W_i		= 0.1
+Jz              = 1.0
+BC              = 1
+Int_flag        = 0
+Dis_gen         = 0
+Format_flag     = 0
+In_flag         = 1
