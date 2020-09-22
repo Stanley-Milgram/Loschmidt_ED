@@ -10,22 +10,23 @@ for disorder in 2.0 7.0 8.0 15.0
 do
 echo "Delta = " $disorder
 
-for disin in 1
+for dis in 0 1
 do
-echo "Disorder type = "$disin
+echo "Dis_gen = "$dis
 
 for intflag in 0 1
 do
 echo "Interaction = "$intflag
 
-jobname=MBLLong-L$size-D$disorder-Dis$disin-Int-$intflag
+jobname=MBLLong-L$size-D$disorder-Dis$dis-Int-$intflag
 slurmscript=$jobname
 
-sed "s/SIZE/$size/g" $slurmSLAVE | sed "s/DISORDER/$disorder/g"| sed "s/DIS_IN/$disin/g" | sed "s/INT_FLAG/$intflag/g" |sed "s/MYJOBNAME/$jobname/g" > $slurmscript
+sed "s/SIZE/$size/g" $slurmSLAVE | sed "s/DISORDER/$disorder/g"| sed "s/DIS_FLAG/$dis/g" | sed "s/INT_FLAG/$intflag/g" |sed "s/MYJOBNAME/$jobname/g" > $slurmscript
 
 echo "submitting " $slurmscript
 sbatch $slurmscript
 sleep 2
+
 done
 done
 done

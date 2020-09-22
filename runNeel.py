@@ -2,9 +2,7 @@ from quspin.operators import hamiltonian, exp_op, quantum_operator # Hamiltonian
 from quspin.basis import spin_basis_1d # Hilbert space spin basis
 from quspin.tools.measurements import obs_vs_time # entropies
 import numpy as np # generic math functions
-from quspin.tools.evolution import expm_multiply_parallel
-from numpy.random import ranf, seed, uniform, choice # pseudo random numbers
-import scipy
+from numpy.random import seed, uniform # pseudo random numbers
 import scipy.linalg as _la
 from scipy.sparse import linalg
 import math
@@ -19,7 +17,7 @@ PATH_now = LOCAL
 ### BOUNDARY CONDITIONS
 BC = 1 # 1 --> OPEN, 0 ---> PERIODIC
 ### DISORDER TYPE ###
-dis_flag = 1 # 1 --> QUASIPERIODIC, 0 ---> RANDOM
+dis_flag = params.Dis_gen # 1 --> QUASIPERIODIC, 0 ---> RANDOM
 ### INITIAL STATE ###
 in_flag  = params.In_flag
 
@@ -79,7 +77,7 @@ Losch = np.square(np.abs(np.dot(psi_0,psi_t))).flatten() # Loschmidt echo
 return_rate = -np.log(Losch) # Loschmidt return rate
 
 if dis_flag == 1:
-    directory = '../DATA/ImbQP/L'+str(L)+'/D'+str(W)+'/'
+    directory = '../DATA/NeelQP/L'+str(L)+'/D'+str(W)+'/'
     PATH_now = LOCAL+os.sep+directory+os.sep
     if not os.path.exists(PATH_now):
         os.makedirs(PATH_now)

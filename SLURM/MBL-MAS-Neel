@@ -10,15 +10,15 @@ for disorder in 1.0 2.0 3.0 4.0 5.0 6.0
 do
 echo "Delta = " $disorder
 
-jobname=MBLNeel-L$size-D$disorder
-slurmscript=$jobname
-
-for disin in 0.5
+for disin in 0 1
 do
-echo "Delta_in = "$disin
+echo "Dis_flag = "$dis
 echo $jobname
 
-sed "s/SIZE/$size/g" $slurmSLAVE | sed "s/DISORDER/$disorder/g" | sed "s/DIS_IN/$disin/g" | sed "s/MYJOBNAME/$jobname/g" > $slurmscript
+jobname=MBLNeel-L$size-D$disorder-Dflag$dis
+slurmscript=$jobname
+
+sed "s/SIZE/$size/g" $slurmSLAVE | sed "s/DISORDER/$disorder/g" | sed "s/DIS_FLAG/$dis/g" | sed "s/MYJOBNAME/$jobname/g" > $slurmscript
 
 echo "submitting " $slurmscript
 sbatch $slurmscript

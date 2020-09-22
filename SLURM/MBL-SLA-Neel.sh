@@ -19,7 +19,7 @@ jobname=MYJOBNAME
 echo $jobname
 
 # Executable directory and file
-EXECSRC="/home/physics/phrgmr/Projects/LoschQuspin"
+EXECSRC="/home/physics/phrgmr/Projects/Loschmidt_ED"
 cd $EXECSRC
 
 # Temporary directory for each job
@@ -35,8 +35,8 @@ echo "L               = SIZE ">$inpfile #
 echo "D               = DISORDER ">>$inpfile #
 echo "Jz              = 1.0 ">>$inpfile #
 echo "BC              = 1 ">>$inpfile #
-echo "W_i             = DIS_IN">>$inpfile #
-echo "Dis_gen         = 0 ">>$inpfile #
+echo "W_i             = 0.0">>$inpfile #
+echo "Dis_gen         = DIS_FLAG ">>$inpfile #
 echo "Format_flag     = 0 ">>$inpfile #
 echo "In_flag         = 1 ">>$inpfile #
 
