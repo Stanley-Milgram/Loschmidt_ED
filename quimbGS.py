@@ -54,10 +54,14 @@ compute = {
     'time': lambda t, p: t,
     'losch': lambda t, p: qu.fidelity(psi_0, p)
 }
-evo = qu.Evolution(psi_0, H_post, compute=compute)
-evo.update_to(40)
+evo = qu.Evolution(psi_0, H_post, compute=compute, method='expm')
+
+TS=[]
+for t in evo.at_times(t_tab):
+    TS.append(t)
+
 LOSCH=np.array(-np.log(evo.results['losch']))/N
-TS=evo.results['time']
+
 
 if dis_flag == 1:
     directory = '../DATA/GSQP/L'+str(N)+'/D'+str(W)+'/'
