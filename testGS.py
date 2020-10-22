@@ -25,7 +25,7 @@ J_ETH=(J,J,J)
 
 P = qu.zspin_projector(N, sz=0)
 
-H_ETH = P.T @ qu.ham_heis(N, J_ETH, sparse=False, cyclic=False) @ P
+H_ETH = P.T @ qu.ham_heis(N, J_ETH, sparse=True, cyclic=False) @ P
 Psi_ETH = qu.eigvecsh(H_ETH, k=1, which='SA')
 
 J_evo1=(0.0, 0.0, 0.0)
