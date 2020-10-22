@@ -43,42 +43,42 @@ for t in evo_ETH.at_times(t_tab):
 TS=evo_ETH.results['time']
 LOSCH_ETH=np.array(-np.log(evo_ETH.results['losch']))/N
 
-#
-# ### MBL --> ETH ###
-# W_i = params.W_i
-#
-# J_MBL=(0.0, 0.0, 0.0)
-#
-# H_MBL = P.T @ qu.ham_mbl(N, W_i, J_MBL, cyclic=False, dh_dist='qp', beta=0.721, seed=seed, sparse=True).real @ P
-# Psi_MBL = qu.eigh(H_MBL, k=1, which='SA')[1]
-#
-# J_evo2=(J,J,J)
-#
-# H_evo2 = P.T @ qu.ham_mbl(N, W, J_evo2, cyclic=False, dh_dist='qp', beta=0.721, seed=seed, sparse=True).real @ P
-#
-# compute = {
-#     'time': lambda t, p: t,
-#     'losch': lambda t, p: qu.fidelity(Psi_MBL, p)
-# }
-# evo_MBL = qu.Evolution(Psi_MBL, H_evo2, compute=compute, method='expm')
-#
-# for t in evo_MBL.at_times(t_tab):
-#     continue
-#
-# LOSCH_MBL=np.array(-np.log(evo_MBL.results['losch']))/N
-#
+
+### MBL --> ETH ###
+W_i = params.W_i
+
+J_MBL=(0.0, 0.0, 0.0)
+
+H_MBL = P.T @ qu.ham_mbl(N, W_i, J_MBL, cyclic=False, dh_dist='qp', beta=0.721, seed=seed, sparse=True).real @ P
+Psi_MBL = qu.eigh(H_MBL, k=1, which='SA')[1]
+
+J_evo2=(J,J,J)
+
+H_evo2 = P.T @ qu.ham_mbl(N, W, J_evo2, cyclic=False, dh_dist='qp', beta=0.721, seed=seed, sparse=True).real @ P
+
+compute = {
+    'time': lambda t, p: t,
+    'losch': lambda t, p: qu.fidelity(Psi_MBL, p)
+}
+evo_MBL = qu.Evolution(Psi_MBL, H_evo2, compute=compute, method='expm')
+
+for t in evo_MBL.at_times(t_tab):
+    continue
+
+LOSCH_MBL=np.array(-np.log(evo_MBL.results['losch']))/N
+
 if dis_flag == 1:
-    directory = '../DATA/GSQPETH/L'+str(N)+'/D'+str(W)+'/'
+    directory = '../DATA/TestGSQP/L'+str(N)+'/D'+str(W)+'/'
     PATH_now = LOCAL+os.sep+directory+os.sep
     if not os.path.exists(PATH_now):
         os.makedirs(PATH_now)
 else:
-    directory = '../DATA/GSrandomETH/L'+str(N)+'/D'+str(W)+'/'
+    directory = '../DATA/TestGSrandom/L'+str(N)+'/D'+str(W)+'/'
     PATH_now = LOCAL+os.sep+directory+os.sep
     if not os.path.exists(PATH_now):
         os.makedirs(PATH_now)
 
 nomefile = str(PATH_now+'LoschL_'+str(N)+'D_'+str(W)+'seed'+str(seed)+'.dat')
-np.savetxt(nomefile, np.real(np.c_[TS, LOSCH_ETH]), fmt = '%.9f')
+np.savetxt(nomefile, np.real(np.c_[TS, LOSCH_ETH, LOSCH_MBL]), fmt = '%.9f')
 
 print("Realization completed in {:2f} s".format(time()-ti))
