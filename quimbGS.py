@@ -56,20 +56,11 @@ compute = {
 }
 evo = qu.Evolution(psi_0, H_post, compute=compute, method='expm')
 
-<<<<<<< HEAD
 for t in evo.at_times(t_tab):
     continue
 
 TS=evo.results['time']
 LOSCH=np.array(-np.log(evo.results['losch']))/N
-=======
-TS=[]
-for t in evo.at_times(t_tab):
-    TS.append(t)
-
-LOSCH=np.array(-np.log(evo.results['losch']))/N
-
->>>>>>> 0f4baebdf5adf995e750780e77c6e22e00ce5969
 
 if dis_flag == 1:
     directory = '../DATA/GSQPWi'+str(W_i)+'/L'+str(N)+'/D'+str(W)+'/'
