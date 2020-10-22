@@ -25,7 +25,7 @@ J = 1.0
 dis_flag = params.Dis_gen
 seed = int(1000000*np.random.random())
 int_flag = params.Int_flag
-t_tab = np.linspace(0, 40, 100)
+t_tab = np.logspace(-1, 1.5, 200)
 
 if int_flag==0:
     J_tab=(J,J,0)
@@ -56,20 +56,28 @@ compute = {
 }
 evo = qu.Evolution(psi_0, H_post, compute=compute, method='expm')
 
+<<<<<<< HEAD
+for t in evo.at_times(t_tab):
+    continue
+
+TS=evo.results['time']
+LOSCH=np.array(-np.log(evo.results['losch']))/N
+=======
 TS=[]
 for t in evo.at_times(t_tab):
     TS.append(t)
 
 LOSCH=np.array(-np.log(evo.results['losch']))/N
 
+>>>>>>> 0f4baebdf5adf995e750780e77c6e22e00ce5969
 
 if dis_flag == 1:
-    directory = '../DATA/GSQP/L'+str(N)+'/D'+str(W)+'/'
+    directory = '../DATA/GSQPWi'+str(W_i)+'/L'+str(N)+'/D'+str(W)+'/'
     PATH_now = LOCAL+os.sep+directory+os.sep
     if not os.path.exists(PATH_now):
         os.makedirs(PATH_now)
 else:
-    directory = '../DATA/GSrandom/L'+str(N)+'/D'+str(W)+'/'
+    directory = '../DATA/GSrandomWi'+str(W_i)+'/L'+str(N)+'/D'+str(W)+'/'
     PATH_now = LOCAL+os.sep+directory+os.sep
     if not os.path.exists(PATH_now):
         os.makedirs(PATH_now)

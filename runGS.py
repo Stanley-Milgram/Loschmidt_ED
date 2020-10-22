@@ -84,12 +84,12 @@ for i in range(psi_t.shape[1]):
 return_rate = -np.log(np.array(Losch)) # Loschmidt return rate
 
 if dis_flag == 1:
-    directory = '../DATA/GSQP/L'+str(L)+'/D'+str(W)+'/'
+    directory = '../DATA/GSQPWi'+str(W_i)+'/L'+str(L)+'/D'+str(W)+'/'
     PATH_now = LOCAL+os.sep+directory+os.sep
     if not os.path.exists(PATH_now):
         os.makedirs(PATH_now)
 else:
-    directory = '../DATA/GSrandom/L'+str(L)+'/D'+str(W)+'/'
+    directory = '../DATA/GSrandomWi'+str(W_i)+'/L'+str(L)+'/D'+str(W)+'/'
     PATH_now = LOCAL+os.sep+directory+os.sep
     if not os.path.exists(PATH_now):
         os.makedirs(PATH_now)
