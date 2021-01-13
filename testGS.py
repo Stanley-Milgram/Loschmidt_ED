@@ -18,7 +18,7 @@ J = 1.0
 dis_flag = params.Dis_gen
 seed = int(1000000*np.random.random())
 int_flag = 1
-t_tab = np.logspace(-2, 1.5, 100)
+t_tab = np.logspace(-2, 1.5, 300)
 
 ### ETH ---> MBL ###
 J_ETH=(J,J,J)
@@ -68,7 +68,7 @@ for t in evo_MBL.at_times(t_tab):
 LOSCH_MBL=np.array(-np.log(evo_MBL.results['losch']))/N
 
 if dis_flag == 1:
-    directory = '../DATA/TestGSQP/L'+str(N)+'/D'+str(W)+'/'
+    directory = '../DATA/TestGSQPWi'+str(W_i)+'/L'+str(N)+'/D'+str(W)+'/'
     PATH_now = LOCAL+os.sep+directory+os.sep
     if not os.path.exists(PATH_now):
         os.makedirs(PATH_now)

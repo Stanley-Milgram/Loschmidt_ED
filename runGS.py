@@ -21,7 +21,7 @@ BC = 1 # 1 --> OPEN, 0 ---> PERIODIC
 ### DISORDER TYPE ###
 dis_flag = params.Dis_gen # 1 --> QUASIPERIODIC, 0 ---> RANDOM
 ### INITIAL STATE ###
-in_flag  = params.In_flag
+in_flag  = params.Int_flag
 
 ### SYSTEM SIZE ###
 L = params.L
@@ -46,7 +46,7 @@ oplist_static = [["+-",hop_list],["-+",hop_list],["zz",int_list]]
 imbalance_list = [['z', sublat_list]]
 
 phi = np.random.uniform(0,1)
-t_i, t_f, t_steps = 0.0, 40.0, 500
+t_i, t_f, t_steps = 0.0, 2.0, 500
 t_tab = np.linspace(t_i,t_f,num=t_steps,endpoint=True)
 
 operator_dict = dict(H0 = oplist_static)
@@ -65,8 +65,8 @@ else:
     for j in range(L):
         params_dict["z"+str(j)] = W_i*np.random.uniform(-1,1) # create quench random fields list
 
-HAM_quench = H_dict.tohamiltonian(params_dict) # build post-quench Hamiltonian
-psi_0 = H_dict.eigsh(k=1)[1]
+HAM = H_dict.tohamiltonian(params_dict) # build post-quench Hamiltonian
+psi_0 = HAM.eigsh(k=1)[1]
 psi_0 = psi_0.ravel()
 
 if dis_flag ==1:
@@ -79,10 +79,11 @@ else:
 HAM_quench = H_dict.tohamiltonian(params_dict_quench) # build post-quench Hamiltonia
 psi_t = HAM_quench.evolve(psi_0, 0.0, t_tab) # evolve with post-quench Hamiltonian
 Losch=[]
+E_t=[]
 for i in range(psi_t.shape[1]):
     Losch.append(abs(np.vdot(psi_t[:,i].ravel(), psi_0))**2)
+    E_t.append(np.real(HAM.expt_value(psi_t[:,i])))
 return_rate = -np.log(np.array(Losch)) # Loschmidt return rate
-
 if dis_flag == 1:
     directory = '../DATA/GSQPWi'+str(W_i)+'/L'+str(L)+'/D'+str(W)+'/'
     PATH_now = LOCAL+os.sep+directory+os.sep
@@ -95,6 +96,6 @@ else:
         os.makedirs(PATH_now)
 
 nomefile = str(PATH_now+'LoschL_'+str(L)+'D_'+str(W)+'phi'+str(phi)+'.dat')
-np.savetxt(nomefile, np.real(np.c_[t_tab, Losch, return_rate]), fmt = '%.9f')
+np.savetxt(nomefile, np.real(np.c_[t_tab, Losch, return_rate, E_t]), fmt = '%.9f')
 
 print("Realization completed in {:2f} s".format(time()-ti))
