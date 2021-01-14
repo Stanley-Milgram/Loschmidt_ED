@@ -66,7 +66,8 @@ else:
         params_dict["z"+str(j)] = W_i*np.random.uniform(-1,1) # create quench random fields list
 
 HAM = H_dict.tohamiltonian(params_dict) # build post-quench Hamiltonian
-psi_0 = HAM.eigsh(k=1)[1]
+E_0, psi_0 = HAM.eigsh(k=1)
+E_MAX=HAM.eigsh(k=1,which='LA')[0]
 psi_0 = psi_0.ravel()
 
 if dis_flag ==1:
@@ -95,7 +96,9 @@ else:
     if not os.path.exists(PATH_now):
         os.makedirs(PATH_now)
 
+E_m=np.array(t_steps*[E_0]).flatten()
+E_M=np.array(t_steps*[E_MAX]).flatten()
 nomefile = str(PATH_now+'LoschL_'+str(L)+'D_'+str(W)+'phi'+str(phi)+'.dat')
-np.savetxt(nomefile, np.real(np.c_[t_tab, Losch, return_rate, E_t]), fmt = '%.9f')
+np.savetxt(nomefile, np.real(np.c_[t_tab, Losch, return_rate, E_t, E_m, E_M]), fmt = '%.9f')
 
 print("Realization completed in {:2f} s".format(time()-ti))
